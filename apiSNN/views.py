@@ -85,20 +85,18 @@ class Clasificacion():
         return render(request, "sobrevivencia.html")
 
     def predecir(request):
-        try:
-            pclass = int(request.POST.get('pclass'))
-            sex = request.POST.get('sex')
-            age = int(''+request.POST.get('age'))
-            fare = float(request.POST.get('fare'))
-            embarked = request.POST.get('embarked')
-        except:
-            pclass=2
-            sex='female'
-            age=60
-            fare=6670
-            embarked='C'
-        print(type(age))
-        #resul=modeloSNN.modeloSNN.suma(num1,num2)
-        resul=modeloSNN.modeloSNN.predecirSobrevivencia(modeloSNN.modeloSNN,pclass,sex,age,fare,embarked)
         
+        try:
+            print("Solicitud de prediccion")
+            URL = request.POST.get('URL')
+
+        except:
+            URL = "";
+        
+        
+        #resul=modeloSNN.modeloSNN.suma(num1,num2)
+        if URL != "":
+            resul=modeloSNN.modeloSNN.predict(URL)
+        else: 
+            resul = "Ingrese bien la direccion de la Imagen"
         return render(request, "welcome.html",{"e":resul})
